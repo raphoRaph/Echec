@@ -1,0 +1,28 @@
+
+body {
+	font-family: 'MinecraftiaRegular';
+   	font-weight: normal;
+   	font-style: normal;                              
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	font-size: 14px;
+	position: relative;
+	background-image: url(Image/prism.png);
+	min-height: 100vh;
+	padding: 1rem;
+
+}
+
+#quote {
+	width: 100%;
+	font-size: 6.5rem;
+	text-align: center;
+	color: rgb(212,29,67);
+	line-height: 200px;
+	
+}
+
+
+

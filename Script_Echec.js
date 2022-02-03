@@ -55,4 +55,13 @@ function Remove_Start(){
 }
 /* */
 
+class Grille{
+    constructor(i, j, couleur, type){
+        this.couleur = couleur // Couleur = Blanc:"B", Noir:"N"
+        this.type = type // Type = Dame:"R", Roi:"R", Tour:"T", Fou;"F", Pion:"P"
+        this.position = (i,j)
+    }
+}
+
+
 Start()

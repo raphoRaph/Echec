@@ -1,5 +1,5 @@
 //Plateau de depart avec les pions
-var Grille = [
+var depart = [
 ["nt", "nc", "nf", "nd", "nr", "nf", "nc", "nt"],
 ["np", "np", "np", "np", "np", "np", "np", "np"],
 [null, null, null, null, null, null, null, null],
@@ -8,6 +8,8 @@ var Grille = [
 [null, null, null, null, null, null, null, null],
 ["bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp"],
 ["bt", "bc", "bf", "bd", "br", "bf", "bc", "bt"]]
+
+var pion_selection = null
 
 rect = document.getElementById("plateau").getBoundingClientRect()
 
@@ -27,6 +29,9 @@ function Initialisation(){
                 img.couleur = "blanc"
             }
             document.getElementById("plateau").appendChild(img) // Ajout d'une image dans la div "plateau"
+            
+            img.onclick = function(){deplacement(this)} 
+
             // Style de l'image
             img.style.left = String(rect.left + j * 100) + "px" // Position à gauche
             img.style.top = String(rect.top + i * 100) + "px" // Positiion en haut
@@ -69,52 +74,62 @@ function Initialisation(){
             img_pion.style.position = "absolute" // Sans contrainte
             img_pion.style.left = String(rect.left + j * 100) + "px" // Position à gauche
             img_pion.style.top = String(rect.top + i * 100) + "px" // Position en haut
+            
+            img.pion = img_pion
         }
     }
 }
 
-function Pion(pion){ // 
-    // Parcours des cases de l'echiquier pour les reinitialiser a chaque lancement de la fonction
-    for(let i = 0; i < 8; i++){
-        for(let j = 0; j < 8; j++){
-            // Si la source de l'image est "plateau_rose", elle est remplacée par "plateau_noir" ou "plateau_blanc"
-            if(document.getElementById(String(i) + String(j)).couleur == "rose"){
-                if((i+j) % 2 == 0){
-                    document.getElementById(String(i) + String(j)).src = "Image/case_noir.png"
-                    document.getElementById(String(i) + String(j)).couleur = "noir"
-                }
-                else{
-                    document.getElementById(String(i) + String(j)).src = "Image/case_blanc.png"
-                    document.getElementById(String(i) + String(j)).couleur = "blanc"
-                }
-            }
-        }
-    }
+// Definition de la fonction "a"
+function Pion(pion){
+    reinitialiser()
+    pion_selection = pion
     // Switch pour lancer differentes actions en fonction du pion qui est cliqué
     switch(pion.id){
         case "bp":
-            document.getElementById(String(Number(pion.case) - 10)).src = "Image/case_rose.png"
-            document.getElementById(String(Number(pion.case) - 20)).src = "Image/case_rose.png"
+            document.getElementById(String(Number(pion.case) - 10)).src = "Image/plateau_rose.png"
+            console.log(Number(pion.case) - 20)
+            document.getElementById(String(Number(pion.case) - 20)).src = "Image/plateau_rose.png"
             document.getElementById(String(Number(pion.case) - 10)).couleur = "rose"
             document.getElementById(String(Number(pion.case) - 20)).couleur = "rose"
             break;
         case "np":
-            document.getElementById(String(Number(pion.case) + 10)).src = "Image/case_rose.png"
-            document.getElementById(String(Number(pion.case) + 20)).src = "Image/case_rose.png"
+            document.getElementById(String(Number(pion.case) + 10)).src = "Image/plateau_rose.png"
+            document.getElementById(String(Number(pion.case) + 20)).src = "Image/plateau_rose.png"
             document.getElementById(String(Number(pion.case) + 10)).couleur = "rose"
             document.getElementById(String(Number(pion.case) + 20)).couleur = "rose"
             break;
     }
 }
 
-/*
-for(let i = 0; i < 8; i++){
-    for(let j = 0; j < 8; j ++){
-        console.log(document.getElementById(String(i) + String(j)).getBoundingClientRect().left)
-        console.log(document.getElementById(String(i) + String(j)).getBoundingClientRect().top)
+function deplacement(frame){
+    if(frame.couleur == "rose"){
+        pion_selection.style.top = String(rect.top + Number(frame.id[0]) * 100) + "px"
+        pion_selection.style.left = String(rect.left + Number(frame.id[1]) * 100) + "px"
+        pion_selection.case = frame.id
+    }
+    reinitialiser()
+}
+
+function reinitialiser(){
+    // Parcours des cases de l'echiquier pour les reinitialiser a chaque lencement de la fonction
+    for(let i = 0; i < 8; i++){
+        for(let j = 0; j < 8; j++){
+            // Si la source de l'image est "plateau_rose", elle est remplacée par "plateau_noir" ou "plateau_blanc"
+            if(document.getElementById(String(i) + String(j)).couleur == "rose"){
+                if((i+j) % 2 == 0){
+                    document.getElementById(String(i) + String(j)).src = "Image/plateau_noir.png"
+                    document.getElementById(String(i) + String(j)).couleur = "noir"
+                }
+                else{
+                    document.getElementById(String(i) + String(j)).src = "Image/plateau_blanc.png"
+                    document.getElementById(String(i) + String(j)).couleur = "blanc"
+                }
+            }
+        }
     }
 }
-*/
+
 console.log(document.getElementById("plateau").getBoundingClientRect().left)
 console.log(document.getElementById("plateau").getBoundingClientRect().top)
 

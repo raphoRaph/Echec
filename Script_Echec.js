@@ -1,5 +1,5 @@
 //Plateau de depart avec les pions
-var depart = [
+var Grille = [
 ["nt", "nc", "nf", "nd", "nr", "nf", "nc", "nt"],
 ["np", "np", "np", "np", "np", "np", "np", "np"],
 [null, null, null, null, null, null, null, null],
@@ -87,15 +87,15 @@ function Pion(pion){
     // Switch pour lancer differentes actions en fonction du pion qui est cliqué
     switch(pion.id){
         case "bp":
-            document.getElementById(String(Number(pion.case) - 10)).src = "Image/plateau_rose.png"
+            document.getElementById(String(Number(pion.case) - 10)).src = "Image/case_rose.png"
             console.log(Number(pion.case) - 20)
-            document.getElementById(String(Number(pion.case) - 20)).src = "Image/plateau_rose.png"
+            document.getElementById(String(Number(pion.case) - 20)).src = "Image/case_rose.png"
             document.getElementById(String(Number(pion.case) - 10)).couleur = "rose"
             document.getElementById(String(Number(pion.case) - 20)).couleur = "rose"
             break;
         case "np":
-            document.getElementById(String(Number(pion.case) + 10)).src = "Image/plateau_rose.png"
-            document.getElementById(String(Number(pion.case) + 20)).src = "Image/plateau_rose.png"
+            document.getElementById(String(Number(pion.case) + 10)).src = "Image/case_rose.png"
+            document.getElementById(String(Number(pion.case) + 20)).src = "Image/case_rose.png"
             document.getElementById(String(Number(pion.case) + 10)).couleur = "rose"
             document.getElementById(String(Number(pion.case) + 20)).couleur = "rose"
             break;
@@ -115,14 +115,14 @@ function reinitialiser(){
     // Parcours des cases de l'echiquier pour les reinitialiser a chaque lencement de la fonction
     for(let i = 0; i < 8; i++){
         for(let j = 0; j < 8; j++){
-            // Si la source de l'image est "plateau_rose", elle est remplacée par "plateau_noir" ou "plateau_blanc"
+            // Si la source de l'image est "case_rose", elle est remplacée par "case_noir" ou "case_blanc"
             if(document.getElementById(String(i) + String(j)).couleur == "rose"){
                 if((i+j) % 2 == 0){
-                    document.getElementById(String(i) + String(j)).src = "Image/plateau_noir.png"
+                    document.getElementById(String(i) + String(j)).src = "Image/case_noir.png"
                     document.getElementById(String(i) + String(j)).couleur = "noir"
                 }
                 else{
-                    document.getElementById(String(i) + String(j)).src = "Image/plateau_blanc.png"
+                    document.getElementById(String(i) + String(j)).src = "Image/case_blanc.png"
                     document.getElementById(String(i) + String(j)).couleur = "blanc"
                 }
             }

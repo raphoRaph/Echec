@@ -10,7 +10,9 @@ var Grille = [
 ["bt", "bc", "bf", "bd", "br", "bf", "bc", "bt"]]
 
 var pion_selection = null
+
 rect = document.getElementById("plateau").getBoundingClientRect()
+
 function Initialisation(){
     // Placement des cases + des pions
     for(let i = 0; i < 8; i++){
@@ -27,7 +29,9 @@ function Initialisation(){
                 img.couleur = "blanc"
             }
             document.getElementById("plateau").appendChild(img) // Ajout d'une image dans la div "plateau"
+            
             img.onclick = function(){deplacement(this)} 
+
             // Style de l'image
             img.style.left = String(rect.left + j * 100) + "px" // Position à gauche
             img.style.top = String(rect.top + i * 100) + "px" // Positiion en haut
@@ -46,6 +50,7 @@ function Initialisation(){
                 if(Grille[i][j][0] == "n"){
                     img_pion.src = "Image/Noir/" + Grille[i][j] + ".png"
                 }
+            
                 document.getElementById("plateau").appendChild(img_pion) // Ajout d'image du pion dans la div "plateau"
                 /* Clic du Pion*/
                 if (Grille[i][j] != null){ // Différent d'une case Null
@@ -94,6 +99,7 @@ function Pion(pion){
     switch(pion.id){
         case "bp":
             document.getElementById(String(Number(pion.case[0]) - 1) + pion.case[1]).src = "Image/case_rose.png"
+            console.log(Number(pion.case) - 20)
             document.getElementById(String(Number(pion.case[0]) - 2) + pion.case[1]).src = "Image/case_rose.png"
             document.getElementById(String(Number(pion.case[0]) - 1) + pion.case[1]).couleur = "rose"
             document.getElementById(String(Number(pion.case[0]) - 2) + pion.case[1]).couleur = "rose"
@@ -158,35 +164,50 @@ function Cava2(pion, o, m){
     }
 }
 
+function case_rose(pion, i1, i2){
+    document.getElementById(String(Number(pion.case[0]) + i1 + String(Number(pion.case[1]) + i2))).src = "Image/case_rose.png"
+    document.getElementById(String(Number(pion.case[0]) + i1 + String(Number(pion.case[1]) + i2))).couleur = "rose"
+}
+
+function case_deplacement(pion, i1, i2){
+    if(document.getElementById(String(Number(pion.case[0]) + i1 + String(Number(pion.case[1]) + i2))).pion == null){
+        return true
+    }
+    return false
+}
+
+
 function Tour(pion){
     reinitialiser()
     pion_selection = pion
     let i = 1
+
     // haut
-    while(Number(pion.case) - i * 10 > -1 && document.getElementById(String(Number(pion.case[0]) - i) + pion.case[1]).pion == null){
-        document.getElementById(String(Number(pion.case[0]) - i) + pion.case[1]).src = "Image/case_rose.png"
-        document.getElementById(String(Number(pion.case[0]) - i) + pion.case[1]).couleur = "rose"
+    while(Number(pion.case) - i * 10 > -1 && case_deplacement(pion, -i, 0) == true){
+        case_rose(pion, -i, 0)
         i += 1
     }
     i = 1
+
     // bas
-    while(Number(pion.case) + i * 10 < 78 && document.getElementById(String(Number(pion.case[0]) + i) + pion.case[1]).pion == null){
-        document.getElementById(String(Number(pion.case[0]) + i) + pion.case[1]).src = "Image/case_rose.png"
-        document.getElementById(String(Number(pion.case[0]) + i) + pion.case[1]).couleur = "rose"
+    console.log()
+    while(Number(pion.case) + i * 10 < 78 && case_deplacement(pion, i, 0) == true){
+        case_rose(pion, i, 0)
         i += 1
+        
     }
     i = 1
+
     // gauche
-    while(Number(pion.case[1]) - i > -1 && document.getElementById(pion.case[0] + String(Number(pion.case[1]) - i)).pion == null){
-        document.getElementById(pion.case[0] + String(Number(pion.case[1]) - i)).src = "Image/case_rose.png"
-        document.getElementById(pion.case[0] + String(Number(pion.case[1]) - i)).couleur = "rose"
+    while(Number(pion.case[1]) - i > -1 && case_deplacement(pion, 0, -i) == true){
+        case_rose(pion, 0, -i)
         i += 1
     }
     i = 1
+
     // droite
-    while(Number(pion.case[1]) + i < 8 && document.getElementById(pion.case[0] + String(Number(pion.case[1]) + i)).pion == null){
-        document.getElementById(pion.case[0] + String(Number(pion.case[1]) + i)).src = "Image/case_rose.png"
-        document.getElementById(pion.case[0] + String(Number(pion.case[1]) + i)).couleur = "rose"
+    while(Number(pion.case[1]) + i < 8 && case_deplacement(pion, 0, i) == true){
+        case_rose(pion, 0, i)
         i += 1
     }
 }
@@ -195,35 +216,35 @@ function Fou(pion){
     reinitialiser()
     pion_selection = pion
     let i = 1
+
 // haut gauche
     while(Number(pion.case[0]) - i > - 1 && Number(pion.case[1]) - i > - 1 
-    && document.getElementById(String(Number(pion.case[0]) - i + String(Number(pion.case[1]) - i))).pion == null){
-        document.getElementById(String(Number(pion.case[0]) - i + String(Number(pion.case[1]) - i))).src = "Image/case_rose.png"
-        document.getElementById(String(Number(pion.case[0]) - i + String(Number(pion.case[1]) - i))).couleur = "rose"
+    && case_deplacement(pion, -i, -i) == true){
+        case_rose(pion, -i, -i)
         i += 1
     }
     i = 1
+
 // haut droit
     while(Number(pion.case[0]) - i > - 1 && Number(pion.case[1]) + i < 8
-    && document.getElementById(String(Number(pion.case[0]) - i + String(Number(pion.case[1]) + i))).pion == null){
-        document.getElementById(String(Number(pion.case[0]) - i + String(Number(pion.case[1]) + i))).src = "Image/case_rose.png"
-        document.getElementById(String(Number(pion.case[0]) - i + String(Number(pion.case[1]) + i))).couleur = "rose"
+    && case_deplacement(pion, -i, i) == true){
+        case_rose(pion, -i, i)
         i += 1
     }
     i = 1
+
 // bas gauche
     while(Number(pion.case[0]) + i < 8 && Number(pion.case[1]) - i > - 1 
-    && document.getElementById(String(Number(pion.case[0]) + i + String(Number(pion.case[1]) - i))).pion == null){
-        document.getElementById(String(Number(pion.case[0]) + i + String(Number(pion.case[1]) - i))).src = "Image/case_rose.png"
-        document.getElementById(String(Number(pion.case[0]) + i + String(Number(pion.case[1]) - i))).couleur = "rose"
+    && case_deplacement(pion, i, -i) == true){
+        case_rose(pion, i, -i)
         i += 1
     }
     i = 1
+
 // bas droit
     while(Number(pion.case[0]) + i < 8 && Number(pion.case[1]) + i < 8
-    && document.getElementById(String(Number(pion.case[0]) + i + String(Number(pion.case[1]) + i))).pion == null){
-        document.getElementById(String(Number(pion.case[0]) + i + String(Number(pion.case[1]) + i))).src = "Image/case_rose.png"
-        document.getElementById(String(Number(pion.case[0]) + i + String(Number(pion.case[1]) + i))).couleur = "rose"
+    && case_deplacement(pion, i, i) == true){
+        case_rose(pion, i, i)
         i += 1
     }
 }
@@ -237,6 +258,10 @@ function deplacement(frame){
         pion_selection.case = frame.id
     }
     reinitialiser()
+}
+
+function croquer(pion){
+    document.getElementById("plateau").removeChild(pion);
 }
 
 function reinitialiser(){
@@ -257,5 +282,9 @@ function reinitialiser(){
         }
     }
 }
+
+console.log(document.getElementById("plateau").getBoundingClientRect().left)
+console.log(document.getElementById("plateau").getBoundingClientRect().top)
+
 
 Initialisation()

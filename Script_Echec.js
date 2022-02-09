@@ -1,98 +1,122 @@
+//Plateau de depart avec les pions
+var Grille = [
+["nt", "nc", "nf", "nd", "nr", "nf", "nc", "nt"],
+["np", "np", "np", "np", "np", "np", "np", "np"],
+[null, null, null, null, null, null, null, null],
+[null, null, null, null, null, null, null, null],
+[null, null, null, null, null, null, null, null],
+[null, null, null, null, null, null, null, null],
+["bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp"],
+["bt", "bc", "bf", "bd", "br", "bf", "bc", "bt"]]
 
-/* Boutton Jouer pour lancer la Grille */
-function Start(){ // Boutton pour afficher la grille d'échec
-    let btn = document.createElement("button");
-    btn.id = String("Joue");
-    let boutonCliqué = String(btn.id);
-    btn.onclick = function(){Tampon(boutonCliqué)}
-    btn.innerHTML = "Jouer";
-    btn.style.width = "200px";
-    btn.style.height = "200px";
-    btn.style.border = "1px solid #202020";
-    document.body.appendChild(btn);
-    document.getElementById("Jeu").appendChild(btn);
-}
-/* */
-var GrilleFond = []
-for (let i = 0; i < 10; i ++){
-    GrilleFond[i] = new Array(21)
-    for (let j = 0; j < 10; j++){
-        GrilleFond[i][j] = String(i) + String(j);
+rect = document.getElementById("plateau").getBoundingClientRect()
+
+function Initialisation(){
+    // Placement des cases + des pions
+    for(let i = 0; i < 8; i++){
+        for(let j = 0; j < 8; j++){
+            /* Plateau */
+            let img = document.createElement("img") // Creation d'une variable image (img)
+            img.id = String(i) + String(j) // Attribution de l'id de l'image
+            if((i+j) % 2 == 0){ // Noir si i + j % 2 == 0
+                img.src = "Image/plateau_noir.png"
+                img.couleur = "noir"
+            }
+            else{ // Blanc si i + j % 2 == 1
+                img.src = "Image/plateau_blanc.png"
+                img.couleur = "blanc"
+            }
+            document.getElementById("plateau").appendChild(img) // Ajout d'une image dans la div "plateau"
+            // Style de l'image
+            img.style.left = String(rect.left + j * 100) + "px" // Position à gauche
+            img.style.top = String(rect.top + i * 100) + "px" // Positiion en haut
+            img.style.position = "absolute" // Position sans contrainte
+            img.style.margin = "-3px" // Aucune bordure
+            /* */
+            /* Pion */
+            let img_pion = document.createElement("img") // Creation d'une variable image (img_pion)
+            img_pion.case = String(i) + String(j) // Id de l'image
+            img_pion.id = Grille[i][j] // Position sur la Grille
+            if(Grille[i][j] != null){ // Choisir les différents dossiers
+                if(Grille[i][j][0] == "b"){
+                    img_pion.src = "Image/Blanc/" + Grille[i][j] + ".png"
+                }
+                if(Grille[i][j][0] == "n"){
+                    img_pion.src = "Image/Noir/" + Grille[i][j] + ".png"
+                }
+            }
+            document.getElementById("plateau").appendChild(img_pion) // Ajout d'image du pion dans la div "plateau"
+            /* Clic du Pion*/
+            if (Grille[i][j] != null){ // Différent d'une case Null
+                switch(Grille[i][j][1]){ 
+                    case "t":
+                        img_pion.onclick = function(){Tour(this)}
+                    case "c":
+                        img_pion.onclick = function(){Cava(this)}
+                    case "f":
+                        img_pion.onclick = function(){Fou(this)}
+                    case "d":
+                        img_pion.onclick = function(){Dame(this)}
+                    case "r":
+                        img_pion.onclick = function(){Roi(this)}
+                    case 'p':
+                        img_pion.onclick = function(){Pion(this)}
+                }
+            }
+            /* */
+            img_pion.style.margin = "-3px" // Sans bordure
+            img_pion.style.zIndex = "1" // Niveau de l'image
+            img_pion.style.position = "absolute" // Sans contrainte
+            img_pion.style.left = String(rect.left + j * 100) + "px" // Position à gauche
+            img_pion.style.top = String(rect.top + i * 100) + "px" // Position en haut
+        }
     }
 }
-/* Ecriture de la Grille d'Echec */
-var pos = []
 
-
-
-function Tampon(){
-    Remove_Start()
-    for (let i = 0; i < 8; i++){
-        for (let j = 0; j < 8; j++){
-            let btn = document.createElement("button");
-            btn.id = String(i) + String(j);
-            let boutonCliqué = String(btn.id)
-            btn.onclick = function(){Clic(boutonCliqué)}
-            btn.innerHTML = GrilleFond[i][j];
-            btn.style.width = "150px";
-            btn.style.height = "150px";
-            btn.style.border = "0px";
-            document.body.appendChild(btn);
-            document.getElementById("Jeu").appendChild(btn);
-            let rect = btn.getBoundingClientRect() // Récupération de la position de l'image de la case
-            pos.push([rect.top, rect.left]) // Renvoi les positions par apport à Gauche et à Droite
-            if ((i - j)%2 != 0){ /* Alternance des couleurs */
-                document.getElementById(String(i) + String(j)).style.backgroundColor = 'black';
-                btn.style.color = "black";
-            }
-            else{
-                document.getElementById(String(i) + String(j)).style.backgroundColor = 'white';
-                btn.style.color = "white";
+function Pion(pion){ // 
+    // Parcours des cases de l'echiquier pour les reinitialiser a chaque lancement de la fonction
+    for(let i = 0; i < 8; i++){
+        for(let j = 0; j < 8; j++){
+            // Si la source de l'image est "plateau_rose", elle est remplacée par "plateau_noir" ou "plateau_blanc"
+            if(document.getElementById(String(i) + String(j)).couleur == "rose"){
+                if((i+j) % 2 == 0){
+                    document.getElementById(String(i) + String(j)).src = "Image/plateau_noir.png"
+                    document.getElementById(String(i) + String(j)).couleur = "noir"
+                }
+                else{
+                    document.getElementById(String(i) + String(j)).src = "Image/plateau_blanc.png"
+                    document.getElementById(String(i) + String(j)).couleur = "blanc"
+                }
             }
         }
     }
-    Debut()
-}
-/* */
-/* Suppression du Bouton "Jouer" */
-function Remove_Start(){
-        var elem = document.getElementById("Joue")
-        elem.parentNode.removeChild(elem);
-}
-/* */
-/* Grille des pions */
-var Grille_Base_pion = [[["T"],["C"],["F"],["D"],["R"],["F"],["C"],["T"]],[["P"],["P"],["P"],["P"],["P"],["P"],["P"],["P"]]]; // Grille pour placer les pions au début
-
-function Debut(){ // Création de la Grille Joueur/ Affichage
-    var Grille = []
-    for (let i = 0; i < 7; i ++){
-        Grille[i] = new Array(7)
-        for (let j = 0; j < 7; j++){
-            Grille[i][j] = [new Case(pos[i+j][0],pos[i+j][1]), new Pion(i,j,"None","None")]; // Liste dans une postition 
-        }
+    // Switch pour lancer differentes actions en fonction du pion qui est cliqué
+    switch(pion.id){
+        case "bp":
+            document.getElementById(String(Number(pion.case) - 10)).src = "Image/plateau_rose.png"
+            document.getElementById(String(Number(pion.case) - 20)).src = "Image/plateau_rose.png"
+            document.getElementById(String(Number(pion.case) - 10)).couleur = "rose"
+            document.getElementById(String(Number(pion.case) - 20)).couleur = "rose"
+            break;
+        case "np":
+            document.getElementById(String(Number(pion.case) + 10)).src = "Image/plateau_rose.png"
+            document.getElementById(String(Number(pion.case) + 20)).src = "Image/plateau_rose.png"
+            document.getElementById(String(Number(pion.case) + 10)).couleur = "rose"
+            document.getElementById(String(Number(pion.case) + 20)).couleur = "rose"
+            break;
     }
 }
 
-class Case{ // Caractéristique d'une case (position en px sur l'écran en x,y et son image [Blanc/Noir])
-    constructor(x ,y,img){
-        this.px_x = x
-        this.px_y = y
-        this.img = img
-    }
-    Grisage(){ // Grisage de la case choisi
-
+/*
+for(let i = 0; i < 8; i++){
+    for(let j = 0; j < 8; j ++){
+        console.log(document.getElementById(String(i) + String(j)).getBoundingClientRect().left)
+        console.log(document.getElementById(String(i) + String(j)).getBoundingClientRect().top)
     }
 }
+*/
+console.log(document.getElementById("plateau").getBoundingClientRect().left)
+console.log(document.getElementById("plateau").getBoundingClientRect().top)
 
-class Pion{ // Caratéristique d'un Pion (position sur la Grille [x,y], son type de pion [Tour, Cavalier, ...], sa couleur [Blanc/Noir] et son image [type de pion])
-    constructor(x,y,couleur,type,img){
-        this.x = x
-        this.y = y
-        this.couleur = couleur
-        this.type = type
-        this.img = img
-    }
-}
-/* */
 
-Start()
+Initialisation()

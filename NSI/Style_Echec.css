@@ -1,0 +1,10 @@
+
+body {                             
+	background-image: url(Image/prism.png);
+
+}
+
+.plateau{
+	width: 800px;
+	height: 800px;
+}

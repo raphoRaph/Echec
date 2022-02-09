@@ -19,11 +19,11 @@ function Initialisation(){
             let img = document.createElement("img") // Creation d'une variable image (img)
             img.id = String(i) + String(j) // Attribution de l'id de l'image
             if((i+j) % 2 == 0){ // Noir si i + j % 2 == 0
-                img.src = "Image/plateau_noir.png"
+                img.src = "Image/case_noir.png"
                 img.couleur = "noir"
             }
             else{ // Blanc si i + j % 2 == 1
-                img.src = "Image/plateau_blanc.png"
+                img.src = "Image/case_blanc.png"
                 img.couleur = "blanc"
             }
             document.getElementById("plateau").appendChild(img) // Ajout d'une image dans la div "plateau"
@@ -80,11 +80,11 @@ function Pion(pion){ //
             // Si la source de l'image est "plateau_rose", elle est remplacée par "plateau_noir" ou "plateau_blanc"
             if(document.getElementById(String(i) + String(j)).couleur == "rose"){
                 if((i+j) % 2 == 0){
-                    document.getElementById(String(i) + String(j)).src = "Image/plateau_noir.png"
+                    document.getElementById(String(i) + String(j)).src = "Image/case_noir.png"
                     document.getElementById(String(i) + String(j)).couleur = "noir"
                 }
                 else{
-                    document.getElementById(String(i) + String(j)).src = "Image/plateau_blanc.png"
+                    document.getElementById(String(i) + String(j)).src = "Image/case_blanc.png"
                     document.getElementById(String(i) + String(j)).couleur = "blanc"
                 }
             }
@@ -93,14 +93,14 @@ function Pion(pion){ //
     // Switch pour lancer differentes actions en fonction du pion qui est cliqué
     switch(pion.id){
         case "bp":
-            document.getElementById(String(Number(pion.case) - 10)).src = "Image/plateau_rose.png"
-            document.getElementById(String(Number(pion.case) - 20)).src = "Image/plateau_rose.png"
+            document.getElementById(String(Number(pion.case) - 10)).src = "Image/case_rose.png"
+            document.getElementById(String(Number(pion.case) - 20)).src = "Image/case_rose.png"
             document.getElementById(String(Number(pion.case) - 10)).couleur = "rose"
             document.getElementById(String(Number(pion.case) - 20)).couleur = "rose"
             break;
         case "np":
-            document.getElementById(String(Number(pion.case) + 10)).src = "Image/plateau_rose.png"
-            document.getElementById(String(Number(pion.case) + 20)).src = "Image/plateau_rose.png"
+            document.getElementById(String(Number(pion.case) + 10)).src = "Image/case_rose.png"
+            document.getElementById(String(Number(pion.case) + 20)).src = "Image/case_rose.png"
             document.getElementById(String(Number(pion.case) + 10)).couleur = "rose"
             document.getElementById(String(Number(pion.case) + 20)).couleur = "rose"
             break;

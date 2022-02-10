@@ -11,10 +11,29 @@ var Grille = [
 
 var pion_selection = null
 
+// Nombre aléatoire pour sons
+function SonAleatoire() {
+    return Math.floor(Math.random() * 18);
+  }
+
+  // Musique de fond
+var fond = document.createElement('audio')
+fond.src = "Sounds/Fond.mp3"
+fond.volume = 0.4
+fond.loop = true
+
+// Son d'un mouvement
+var SonMouv = document.createElement('audio')
+SonMouv.src = "Sounds/move.mp3"
+SonMouv.volume = 0.6
+
+
+
 rect = document.getElementById("plateau").getBoundingClientRect()
 
 function Initialisation(){
     // Placement des cases + des pions
+    fond.play()
     for(let i = 0; i < 8; i++){
         for(let j = 0; j < 8; j++){
             /* Plateau */
@@ -256,6 +275,7 @@ function deplacement(frame){
         document.getElementById(pion_selection.case).pion = null
         frame.pion = pion_selection
         pion_selection.case = frame.id
+        SonMouv.play()
     }
     reinitialiser()
 }

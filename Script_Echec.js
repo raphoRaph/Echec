@@ -20,13 +20,19 @@ function SonAleatoire() {
   // Musique de fond
 var fond = document.createElement('audio')
 fond.src = "Sounds/Fond.mp3"
-fond.volume = 0.4
+fond.volume = 0.2
 fond.loop = true
+
+// Son de mort
+var death = document.createElement('audio')
+death.src = "Sounds/Death.mp3"
+death.volume = 0.5
+
 
 // Son d'un mouvement
 var SonMouv = document.createElement('audio')
 SonMouv.src = "Sounds/move.mp3"
-SonMouv.volume = 0.6
+SonMouv.volume = 0.5
 
 rect = document.getElementById("plateau").getBoundingClientRect()
 
@@ -349,6 +355,7 @@ function croquer(pion){
     //pion_adverses = []
     deplacement(document.getElementById(pion.case))
     document.getElementById("plateau").removeChild(pion);
+    death.play()
 }
 
 function reinitialiser(){

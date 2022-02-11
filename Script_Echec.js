@@ -37,7 +37,6 @@ SonMouv.volume = 0.7
 rect = document.getElementById("plateau").getBoundingClientRect()
 
 function Initialisation(){
-    fond.play()
     // Placement des cases + des pions
     for(let i = 0; i < 8; i++){
         for(let j = 0; j < 8; j++){
@@ -67,6 +66,7 @@ function Initialisation(){
                 let img_pion = document.createElement("img") // Creation d'une variable image (img_pion)
                 img_pion.case = String(i) + String(j) // Id de l'image
                 img_pion.id = Grille[i][j] // Position sur la Grille
+                img_pion.move = false
                 // Choisir les différents dossiers
                 if(Grille[i][j][0] == "b"){
                     img_pion.src = "Image/Blanc/" + Grille[i][j] + ".png"
@@ -116,8 +116,8 @@ function Initialisation(){
     /* image son*/
     let Son = document.createElement("img")
     Son.id = "son"
-    Son.src = "Image/soundOn.png"
-    Son.active = true
+    Son.src = "Image/soundOff.png"
+    Son.active = false
     Son.onclick = function(){
         if(Son.active == true){
             fond.pause()
@@ -142,21 +142,38 @@ function Pion(pion){
     }
     reinitialiser()
     pion_selection = pion
+    let i = 1
     // Switch pour lancer differentes actions en fonction du pion qui est cliqué
-    switch(pion.id){
-        case "bp":
-            document.getElementById(String(Number(pion.case[0]) - 1) + pion.case[1]).src = "Image/case_rose.png"
-            console.log(Number(pion.case) - 20)
-            document.getElementById(String(Number(pion.case[0]) - 2) + pion.case[1]).src = "Image/case_rose.png"
-            document.getElementById(String(Number(pion.case[0]) - 1) + pion.case[1]).couleur = "rose"
-            document.getElementById(String(Number(pion.case[0]) - 2) + pion.case[1]).couleur = "rose"
-            break;
-        case "np":
-            document.getElementById(String(Number(pion.case) + 10)).src = "Image/case_rose.png"
-            document.getElementById(String(Number(pion.case) + 20)).src = "Image/case_rose.png"
-            document.getElementById(String(Number(pion.case) + 10)).couleur = "rose"
-            document.getElementById(String(Number(pion.case) + 20)).couleur = "rose"
-            break;
+    if(pion.move == false){
+        switch(pion.id){
+            case "bp":
+                    document.getElementById(String(Number(pion.case) - 10)).src = "Image/case_rose.png"
+                    document.getElementById(String(Number(pion.case) - 10)).couleur = "rose"
+                    document.getElementById(String(Number(pion.case) - 20)).src = "Image/case_rose.png"
+                    document.getElementById(String(Number(pion.case) - 20)).couleur = "rose"
+                    pion.move = true
+                    break;
+            case "np":
+                document.getElementById(String(Number(pion.case) + 10)).src = "Image/case_rose.png"
+                document.getElementById(String(Number(pion.case) + 10)).couleur = "rose"
+                document.getElementById(String(Number(pion.case) + 20)).src = "Image/case_rose.png"
+                document.getElementById(String(Number(pion.case) + 20)).couleur = "rose"
+                pion.move = true
+                break;
+            }
+        
+    }
+    if(pion.move = true){
+        switch(pion.id){
+            case "bp":
+                document.getElementById(String(Number(pion.case[0]) - 1) + pion.case[1]).src = "Image/case_rose.png" 
+                document.getElementById(String(Number(pion.case[0]) - 1) + pion.case[1]).couleur = "rose"
+                break;
+            case "np":
+                document.getElementById(String(Number(pion.case) + 10)).src = "Image/case_rose.png"
+                document.getElementById(String(Number(pion.case) + 10)).couleur = "rose"
+                break;                               
+        }
     }
 }
 
@@ -403,6 +420,5 @@ function reinitialiser(){
 
 console.log(document.getElementById("plateau").getBoundingClientRect().left)
 console.log(document.getElementById("plateau").getBoundingClientRect().top)
-
 
 Initialisation()

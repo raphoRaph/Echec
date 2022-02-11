@@ -26,13 +26,13 @@ fond.loop = true
 // Son de mort
 var death = document.createElement('audio')
 death.src = "Sounds/Death.mp3"
-death.volume = 0.5
+death.volume = 0.8
 
 
 // Son d'un mouvement
 var SonMouv = document.createElement('audio')
 SonMouv.src = "Sounds/move.mp3"
-SonMouv.volume = 0.5
+SonMouv.volume = 0.7
 
 rect = document.getElementById("plateau").getBoundingClientRect()
 
@@ -113,6 +113,25 @@ function Initialisation(){
             }
         }
     }
+    /* image son*/
+    let Son = document.createElement("img")
+    Son.id = "son"
+    Son.src = "Image/soundOn.png"
+    Son.active = true
+    Son.onclick = function(){
+        if(Son.active == true){
+            fond.pause()
+            Son.src = "Image/soundOff.png"
+            Son.active = false
+        }
+        else{
+            Son.active = true
+            fond.play()
+            Son.src = "Image/soundOn.png"
+        }
+    }
+    document.getElementById("son").appendChild(Son)
+    /**/
 }
 
 // Definition de la fonction "a"
@@ -169,7 +188,7 @@ function Cava(pion){
             Cava2(pion, -1, -2) // i j
         }
         if(Number(pion.case[0]) + 1 <= 7){
-            Cava2(pion, -1, -2) // i j
+            Cava2(pion, 1, -2) // i j
         }   
     }
     if(Number(pion.case[1]) + 2 <= 7){

@@ -10,6 +10,7 @@ var Grille = [
 ["bt", "bc", "bf", "bd", "br", "bf", "bc", "bt"]]
 
 var pion_selection = null
+var pion_adverses = []
 
 // Nombre aléatoire pour sons
 function SonAleatoire() {
@@ -27,13 +28,11 @@ var SonMouv = document.createElement('audio')
 SonMouv.src = "Sounds/move.mp3"
 SonMouv.volume = 0.6
 
-
-
 rect = document.getElementById("plateau").getBoundingClientRect()
 
 function Initialisation(){
-    // Placement des cases + des pions
     fond.play()
+    // Placement des cases + des pions
     for(let i = 0; i < 8; i++){
         for(let j = 0; j < 8; j++){
             /* Plateau */
@@ -112,6 +111,10 @@ function Initialisation(){
 
 // Definition de la fonction "a"
 function Pion(pion){
+    if(pion_adverses.includes(pion)){
+        croquer(pion)
+        return
+    }
     reinitialiser()
     pion_selection = pion
     // Switch pour lancer differentes actions en fonction du pion qui est cliqué
@@ -133,6 +136,10 @@ function Pion(pion){
 }
 
 function Cava(pion){
+    if(pion_adverses.includes(pion)){
+        croquer(pion)
+        return
+    }
     reinitialiser()
     pion_selection = pion
     if(Number(pion.case[0]) - 2 >= 0){
@@ -183,11 +190,14 @@ function Cava2(pion, o, m){
     }
 }
 
+// Placement des cases roses
 function case_rose(pion, i1, i2){
     document.getElementById(String(Number(pion.case[0]) + i1 + String(Number(pion.case[1]) + i2))).src = "Image/case_rose.png"
     document.getElementById(String(Number(pion.case[0]) + i1 + String(Number(pion.case[1]) + i2))).couleur = "rose"
 }
 
+
+// voir si une case est vide ou non
 function case_deplacement(pion, i1, i2){
     if(document.getElementById(String(Number(pion.case[0]) + i1 + String(Number(pion.case[1]) + i2))).pion == null){
         return true
@@ -195,14 +205,34 @@ function case_deplacement(pion, i1, i2){
     return false
 }
 
+// verifier si il y a un pion adverse sur une case
+function pion_adverse(pion, i1, i2){
+    if(document.getElementById(String(Number(pion.case[0]) + i1 + String(Number(pion.case[1]) + i2))).pion.id[0] != pion.id[0]){
+        return true
+    }
+    return false
+}
+
+function attaque(pion, i1, i2){
+    document.getElementById(String(Number(pion.case[0]) + i1 + String(Number(pion.case[1]) + i2))).couleur = "rose"
+    pion_adverses.push(document.getElementById(String(Number(pion.case[0]) + i1 + String(Number(pion.case[1]) + i2))).pion)
+}
 
 function Tour(pion){
+    if(pion_adverses.includes(pion)){
+        croquer(pion)
+        return
+    }
     reinitialiser()
     pion_selection = pion
     let i = 1
 
     // haut
-    while(Number(pion.case) - i * 10 > -1 && case_deplacement(pion, -i, 0) == true){
+    while(Number(pion.case) - i * 10 > -1 && (case_deplacement(pion, -i, 0) || pion_adverse(pion, -i, 0))){
+        if(! case_deplacement(pion, -i, 0)){
+            attaque(pion, -i, 0)
+            break;
+        }
         case_rose(pion, -i, 0)
         i += 1
     }
@@ -210,7 +240,11 @@ function Tour(pion){
 
     // bas
     console.log()
-    while(Number(pion.case) + i * 10 < 78 && case_deplacement(pion, i, 0) == true){
+    while(Number(pion.case) + i * 10 < 78 && (case_deplacement(pion, i, 0) || pion_adverse(pion, i, 0))){
+        if(! case_deplacement(pion, i, 0)){
+            attaque(pion, i, 0)
+            break;
+        }
         case_rose(pion, i, 0)
         i += 1
         
@@ -218,53 +252,84 @@ function Tour(pion){
     i = 1
 
     // gauche
-    while(Number(pion.case[1]) - i > -1 && case_deplacement(pion, 0, -i) == true){
+    while(Number(pion.case[1]) - i > -1 && (case_deplacement(pion, 0, -i) || pion_adverse(pion, 0, -i))){
+        if(! case_deplacement(pion, 0, -i)){
+            attaque(pion, 0, -i)
+            break;
+        }
         case_rose(pion, 0, -i)
         i += 1
     }
     i = 1
 
     // droite
-    while(Number(pion.case[1]) + i < 8 && case_deplacement(pion, 0, i) == true){
+    while(Number(pion.case[1]) + i < 8 && (case_deplacement(pion, 0, i) || pion_adverse(pion, 0, i))){
+        if(! case_deplacement(pion, 0, i)){
+            attaque(pion, 0, i)
+            break;
+        }
         case_rose(pion, 0, i)
         i += 1
+    }
+    for(let i = 0; i < pion_adverses.length; i ++){
+        pion_adverses[i].src = "Image/mort.png"
     }
 }
 
 function Fou(pion){
+    if(pion_adverses.includes(pion)){
+        croquer(pion)
+        return
+    }
+
     reinitialiser()
     pion_selection = pion
     let i = 1
 
 // haut gauche
-    while(Number(pion.case[0]) - i > - 1 && Number(pion.case[1]) - i > - 1 
-    && case_deplacement(pion, -i, -i) == true){
+    while(Number(pion.case[0]) - i > - 1 && Number(pion.case[1]) - i > - 1 && (case_deplacement(pion, -i, -i) || pion_adverse(pion, -i, -i))){
+        if(! case_deplacement(pion, -i, -i)){
+            attaque(pion, -i, -i)
+            break;
+        }
         case_rose(pion, -i, -i)
         i += 1
     }
     i = 1
 
 // haut droit
-    while(Number(pion.case[0]) - i > - 1 && Number(pion.case[1]) + i < 8
-    && case_deplacement(pion, -i, i) == true){
+    while(Number(pion.case[0]) - i > - 1 && Number(pion.case[1]) + i < 8 && (case_deplacement(pion, -i, i) || pion_adverse(pion, -i, i))){
+        if(! case_deplacement(pion, -i, i)){
+            attaque(pion, -i, i)
+            break;
+        }
         case_rose(pion, -i, i)
         i += 1
     }
     i = 1
 
 // bas gauche
-    while(Number(pion.case[0]) + i < 8 && Number(pion.case[1]) - i > - 1 
-    && case_deplacement(pion, i, -i) == true){
+    while(Number(pion.case[0]) + i < 8 && Number(pion.case[1]) - i > - 1 && (case_deplacement(pion, i, -i) || pion_adverse(pion, i, -i))){
+        if(! case_deplacement(pion, i, -i)){
+            attaque(pion, i, -i)
+            break;
+        }
         case_rose(pion, i, -i)
         i += 1
     }
     i = 1
 
 // bas droit
-    while(Number(pion.case[0]) + i < 8 && Number(pion.case[1]) + i < 8
-    && case_deplacement(pion, i, i) == true){
+    while(Number(pion.case[0]) + i < 8 && Number(pion.case[1]) + i < 8 && (case_deplacement(pion, i, i) || pion_adverse(pion, i, i))){
+        if(! case_deplacement(pion, i, i)){
+            attaque(pion, i, i)
+            break;
+        }
         case_rose(pion, i, i)
         i += 1
+    }
+    for(let i = 0; i < pion_adverses.length; i ++){
+        pion_adverses[i].src = "Image/mort.png"
     }
 }
 
@@ -281,6 +346,8 @@ function deplacement(frame){
 }
 
 function croquer(pion){
+    //pion_adverses = []
+    deplacement(document.getElementById(pion.case))
     document.getElementById("plateau").removeChild(pion);
 }
 
@@ -301,6 +368,11 @@ function reinitialiser(){
             }
         }
     }
+    for(let i = 0; i < pion_adverses.length; i ++){
+        if(pion_adverses[i].id[0] == 'n'){pion_adverses[i].src = "Image/noir/" + String(pion_adverses[i].id) + ".png"}   
+        else{pion_adverses[i].src = "Image/blanc/" + String(pion_adverses[i].id) + ".png"}
+    }
+    pion_adverses = []
 }
 
 console.log(document.getElementById("plateau").getBoundingClientRect().left)

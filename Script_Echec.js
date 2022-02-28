@@ -445,6 +445,7 @@ function Fou(pion){
             if(!frame_echec_roi.includes(frame)){case_rose(pion, -i, i)}
         }
         i += 1
+        
     }
     i = 1
     while(test_sur_plateau(pion, i, -i) && test_case_accessible(pion, i, -i)){
@@ -1138,5 +1139,8 @@ function rejouer(){
     }
     Initialisation()
 }
+
+console.log(document.getElementById("plateau").getBoundingClientRect().left)
+console.log(document.getElementById("plateau").getBoundingClientRect().top)
 
 Initialisation()

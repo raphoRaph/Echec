@@ -8,10 +8,316 @@
     	<!--<link rel="icon" href="Image/Noam_Faivre.PNG" type="image/png">-->
 		<link rel="stylesheet" href="Style_Echec.css">
 		<link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/minecraftia" type="text/css"/>
-    	<script src="https://kit.fontawesome.com/ce9adb65b6.js" crossorigin="anonymous"></script>
 	</head>
 	<body>
-		<div class="plateau" id="plateau"></div>
+		<img id="open" src="Image/prof_jaquot.png" onclick="menu()">
+		<div id="Jeu">
+			<div class="plateau" id="plateau">
+				<canvas id="canvas"></canvas>
+				<img id="image" src="Image/buzzer.png">
+				<h1 id="text"></h1>
+				<div id="pions_changement">
+					<img id="1" class="pions_changement">
+					<img id="2" class="pions_changement">
+					<img id="3" class="pions_changement">
+					<img id="4" class="pions_changement">
+				</div>
+			</div>
+			<div class="pions_morts" id="pions_noirs_morts"></div>
+			<div class="pions_morts" id="pions_blancs_morts"></div>
+			<div id="son"></div>
+			<div id="QI_blanc">QI : </div>
+			<div id="QI_noir">QI : </div>
+		</div>
+		<div id="Livre">
+			<img src="Image/livre.png" id="carnet">
+			<img src="Image/milieu.png" id="milieu">
+			<img src="Image/quit.png" id="quit" onclick="exit()">
+			<img src="Image/fleche.png" id="fleche_gauche" onclick="tourne_gauche()">
+			<img src="Image/fleche.png" id="fleche_droite" onclick="tourne_droit()">
+			<img src="Image/point.png" class="Echec" id="r1" onclick="a_page(1)">
+			<img src="Image/point.png" class="Regle" id="r2" onclick="a_page(2)">
+			<img src="Image/point.png" class="Dame" id="r3" onclick="a_page(3)">
+			<img src="Image/Blanc/bd.png" class="Dame" id="g3">
+			<img src="Image/point.png" class="Roi" id="r4" onclick="a_page(4)">
+			<img src="Image/Blanc/br.png" class="Roi" id="g4">
+			<img src="Image/point.png" class="Tour" id="r5" onclick="a_page(5)">
+			<img src="Image/Blanc/bt.png" class="Tour" id="g5">
+			<img src="Image/point.png" class="Cavalier" id="r6" onclick="a_page(6)">
+			<img src="Image/Blanc/bc.png" class="Cavalier" id="g6">
+			<img src="Image/point.png" class="Fou" id="r7" onclick="a_page(7)">
+			<img src="Image/Blanc/bf.png" class="Fou" id="g7">
+			<img src="Image/point.png" class="Pion" id="r8" onclick="a_page(8)">
+			<img src="Image/Blanc/bp.png" class="Pion" id="g8">
+			<img src="Image/point.png" class="Roc" id="r9" onclick="a_page(9)">
+			<img src="Image/point.png" class="Pris" id="r10" onclick="a_page(10)">
+			<img src="Image/point.png" class="Credits" id="r11" onclick="a_page(11)">
+			<img src="Image/point.png" class="Autre" id="r12" onclick="a_page(12)">
+			<img src="Image/point.png" class="ah" id="r13" onclick="a_page(13)">
+			<div class="Page" id="p1">
+				<div class="Haut">
+					<p id="Titre">Les Echecs</p>
+				</div>
+				<div class="Milieu">
+					<p id="Som">Sommaire :</p>
+					<div class="ligne" style="margin: 140px 550px;"></div>
+					<div class="ligne" style="margin: 140px 800px;"></div>
+
+					<p id="point" style="margin: 62px 690px;"></p>
+					<p id="Sous_Som" style="margin: 52px 700px;">
+						<a onclick="a_page(2)">Les Règles</a>
+					</p>
+					<p id="point" style="margin: 92px 690px;"></p>
+					<p id="Sous_Som" style="margin: 82px 700px;">
+						<a onclick="a_page(3)">La Dame</a>
+					</p>
+					<p id="point" style="margin: 122px 690px;"></p>
+					<p id="Sous_Som" style="margin: 112px 700px;">
+						<a onclick="a_page(4)">Le Roi</a>
+
+					<p id="point" style="margin: 152px 690px;"></p>
+					<p id="Sous_Som" style="margin: 142px 700px;">
+						<a onclick="a_page(5)">La Tour</a>
+					</p>
+					<p id="point" style="margin: 182px 690px;"></p>
+					<p id="Sous_Som" style="margin: 172px 700px; ">
+						<a onclick="a_page(6)">Le Cavalier</a>
+					</p>
+					<p id="point" style="margin: 212px 690px;"></p>
+					<p id="Sous_Som" style="margin: 202px 700px; ">
+						<a onclick="a_page(7)">Le Fou</a>
+					</p>
+					<p id="point" style="margin: 62px 945px;"></p>
+					<p id="Sous_Som" style="margin: 52px 955px; ">
+						<a onclick="a_page(8)">Le Pion</a>
+					</p>
+					<p id="point" style="margin: 92px 945px;"></p>
+					<p id="Sous_Som" style="margin: 82px 955px; ">
+						<a onclick="a_page(9)">Le Roc</a>
+					</p>
+					<p id="point" style="margin: 122px 945px;"></p>
+					<p id="Sous_Som" style="margin: 112px 955px; ">
+						<a onclick="a_page(10)">Pris en Passant</a>
+
+					<p id="point" style="margin: 152px 945px;"></p>
+					<p id="Sous_Som" style="margin: 142px 955px; ">
+						<a onclick="a_page(11)">Crédits</a>
+					</p>
+					<p id="point" style="margin: 182px 945px;"></p>
+					<p id="Sous_Som" style="margin: 172px 955px;">
+						<a onclick="a_page(12)">Autre Jeu</a>
+					</p>
+					<p id="point" style="margin: 212px 945px;"></p>
+					<p id="Sous_Som" style="margin: 202px 955px;">
+						<a onclick="a_page(13)">Easter Egg</a>
+					</p>
+				</div>
+
+				<div class="Bas">
+
+				</div>
+				
+			</div>
+			<div class="Page" id="p2">
+				<div class="Haut">
+					<p id="Titre">Les Règles</p>
+					<p id="point"></p>
+					<p id="sous_titre">Jouer au Jeu d'Echecs est déja un privilège alors de jouer sur celui de <a onclick="a_page(11)" id="click">...</a></p>
+				</div>
+				<div class="Milieu">
+
+				</div>
+				<div class="Bas">
+
+				</div>
+				
+			</div>
+			<div class="Page" id="p3">
+				<div class="Haut">
+					<p id="Titre">La Dame</p>
+					<p id="point"></p>
+					<p id="sous_titre">Si la Dame a été perdu lors du combat, vous pouvez la récupérer si un de vos pion est dans la derniere ligne de votre adeversaire.</p></div>
+				
+				<div class="Milieu">
+					<p id="savoir">Chose à savoir :</p>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">La Dame est une pièce à longue portée. </p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Chaque camp possède une Dame : elle se déplace en diagonale et en horizontal/vertical (addition de la <a onclick="a_page(5)" id="click">Tour</a> et du <a onclick="a_page(6)" id="click">Fou</a>).</p>
+				</div>
+
+				<div class="Bas">
+					<img id="move" src="Image/move_reine.PNG" style="margin: 30px 200px;">
+					<div class="ligne" style="margin: 155px 550px;"></div>
+					<img id="move" src="Image/move_reine.PNG" style="margin: 30px 900px;">
+				</div>
+				
+			</div>
+			<div class="Page" id="p4">
+				<div class="Haut">
+					<p id="Titre">Le Roi</p>
+				</div>
+				<div class="Milieu">
+					<p id="savoir">Chose à savoir :</p>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Le Roi est une pièce à courte portée.</p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Le Roi se déplace d'une seule case à la fois.</p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Il dispose d'une règle de déplcaement spéciale : le <a onclick="a_page(9)" id="click">Roc</a>.</p>
+				</div>
+
+				<div class="Bas">
+					<img id="move" src="Image/move_roi.PNG" style="margin: 30px 200px;">
+					<div class="ligne" style="margin: 155px 550px;"></div>
+				</div>
+			</div>
+			<div class="Page" id="p5">
+				<div class="Haut">
+					<p id="Titre">La Tour</p>
+				</div>
+				
+				<div class="Milieu">
+					<p id="savoir">Chose à savoir :</p>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">La tour est une pièce de longue portée.</p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Elle se déplace en ligne horizontal et vertical.</p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Elle fait parti d'une règle de déplacement spéciale : le <a onclick="a_page(9)" id="click">Roc</a>.</p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Chaque camp possède deux tours.</p>
+				</div>
+				<div class="Bas">
+					<img id="move" src="Image/move_tour.PNG" style="margin: 30px 200px;">
+					<div class="ligne" style="margin: 155px 550px;"></div>
+				</div>
+			</div>
+			<div class="Page" id="p6">
+				<div class="Haut">
+					<p id="Titre">Le Cavalier</p>
+				</div>
+				
+				<div class="Milieu">
+					<p id="savoir">Chose à savoir :</p>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Le cavalier est une pièce de moyenne portée.</p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Il a un déplacement très différent de celui des autres pièces. (voir ci contre)</p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Le cavalier ne peut être intercepté par aucune des pièces autour de lui, il saute jusqu'à sa case d'arrivée.</p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Chaque camp possède deux cavaliers.</p>
+				</div>
+				<div class="Bas">
+					<img id="move" src="Image/move_cava.PNG" style="margin: 30px 200px;">
+					<div class="ligne" style="margin: 155px 550px;"></div>
+				</div>
+			</div>
+			<div class="Page" id="p7">
+				<div class="Haut"></div>
+				<p id="Titre">Le Fou</p>
+				<div class="Milieu">
+					<p id="savoir">Chose à savoir :</p>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Le Fou est une pièce de longue portée.</p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Elle se déplace toujours sur les cases d'une même couleur, en diagonale, donc un de cases blanches et un de cases bleus.</p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Chaque camp possède deux fous.</p>
+				</div>
+				<div class="Bas">
+					<img id="move" src="Image/move_fou.PNG" style="margin: 30px 200px;">
+					<div class="ligne" style="margin: 155px 550px;"></div>
+				</div>
+			</div>
+			<div class="Page" id="p8">
+				<div class="Haut"></div>
+				<p id="Titre">Le Pion</p>
+				<div class="Milieu">
+					<p id="savoir">Chose à savoir :</p>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Le Pion est une pièce de courte portée. Il se déplace de une cases en avant, mais à son premier déplacement, il peut avance de soit un ou deux cases</p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Pour capturer une pièce de son adeversaire, le pion capture sur les cases marquées d'un rond (sans pouvoir s'y déplacer si elles sont vides)</p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;"> Les pions disposent d'une règle de capture spéciale : le <a onclick="a_page(10)" id="click">Pris en passant</a>.</p>
+					<br>
+					<p id="point" style="margin: 10px 10px;"></p>
+					<p id="chose_savoir" style="margin: 0px 20px;">Chaque camp possède huits pions.</p>
+				</div>
+				<div class="Bas">
+					<img id="move" src="Image/move_pion_b.PNG" style="margin: 30px 200px;">
+					<div class="ligne" style="margin: 155px 550px;"></div>
+					<img id="move" src="Image/move_pion_n.PNG" style="margin: 30px 900px;">
+				</div>
+			</div>
+			<div class="Page" id="p9">
+				<div class="Haut">
+					<p id="Titre">Le Roc</p>
+				</div>
+				<div class="Milieu">
+					ESTEBAN UN GIF
+				</div>
+				<div class="Bas"></div>
+			</div>
+			<div class="Page" id="p10">
+				<div class="Haut">
+					<p id="Titre">Pris en Passant</p>
+				</div>
+				<div class="Milieu">
+					ESTEBAN UN GIF
+				</div>
+				<div class="Bas"></div>
+			</div>
+			<div class="Page" id="p11">
+				<div class="Haut">
+					<p id="Titre">Crédits</p>
+				</div>
+				<div class="Milieu">
+					
+				</div>
+				<div class="Bas">
+				</div>
+			</div>
+			<div class="Page" id="p12">
+				<div class="Haut">
+					<p id="Titre">Autre Jeu</p>
+				</div>
+				<div class="Milieu">
+
+				</div>
+				<div class="Bas">
+
+				</div>
+			</div>
+			<div class="Page" id="p13">
+				<div class="Haut">
+					<p id="Titre">Easter Egg</p>
+				</div>
+				<div class="Milieu">
+
+				</div>
+				<div class="Bas">
+
+				</div>
+			</div>
+		</div>
+		<!--<div class="plateau" id="plateau"></div>-->
+
       	<script src="Script_Echec.js"></script>
 	</body>
 </html>

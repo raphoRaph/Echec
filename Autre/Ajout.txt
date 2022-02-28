@@ -221,3 +221,351 @@ nav ul li:hover ul li
 }
 
 /* Fin de l'Entête */
+
+
+		<img id="biblio" src="Image/biblio.png" onclick="Apparition()">
+		<img id="exit" src="Image/Berthelon.PNG" onclick="Disparition()">
+
+
+
+
+
+
+    //Plateau de depart avec les pions
+var Grille = [
+[null, null, null, null, null, null, null, null],
+[null, null, null, null, null, null, null, null],
+[null, null, null, null, null, null, null, null],
+[null, null, null, "np", null, null, null, null],
+[null, null, null, "ac", null, null, null, null],
+[null, null, null, null, null, null, null, null],
+[null, null, null, null, null, null, null, null],
+[null, null, null, null, null, null, null, null]]
+
+var pion_selection = null
+rect = document.getElementById("plateau").getBoundingClientRect()
+function Initialisation(){
+    // Placement des cases + des pions
+    for(let i = 0; i < 8; i++){
+        for(let j = 0; j < 8; j++){
+            /* Plateau */
+            let img = document.createElement("img") // Creation d'une variable image (img)
+            img.id = String(i) + String(j) // Attribution de l'id de l'image
+            if((i+j) % 2 == 0){ // Noir si i + j % 2 == 0
+                img.src = "Image/case_noir.png"
+                img.couleur = "noir"
+            }
+            else{ // Blanc si i + j % 2 == 1
+                img.src = "Image/case_blanc.png"
+                img.couleur = "blanc"
+            }
+            document.getElementById("plateau").appendChild(img) // Ajout d'une image dans la div "plateau"
+            img.onclick = function(){deplacement(this)} 
+            // Style de l'image
+            img.style.left = String(rect.left + j * 100) + "px" // Position à gauche
+            img.style.top = String(rect.top + i * 100) + "px" // Positiion en haut
+            img.style.position = "absolute" // Position sans contrainte
+            img.style.margin = "-3px" // Aucune bordure
+            /* */
+            /* Pion */
+            if(Grille[i][j] != null){ 
+                let img_pion = document.createElement("img") // Creation d'une variable image (img_pion)
+                img_pion.case = String(i) + String(j) // Id de l'image
+                img_pion.id = Grille[i][j] // Position sur la Grille
+                // Choisir les différents dossiers
+                if(Grille[i][j][0] == "b"){
+                    img_pion.src = "Image/Blanc/" + Grille[i][j] + ".png"
+                }
+                if(Grille[i][j][0] == "n"){
+                    img_pion.src = "Image/Noir/" + Grille[i][j] + ".png"
+                }
+                if(Grille[i][j][0] == "a"){
+                    if((i+j) % 2 == 0){ // Noir si i + j % 2 == 0
+                        img_pion.src = "Image/croix_noir.png"
+                    }
+                    else{ // Blanc si i + j % 2 == 1
+                        img_pion.src = "Image/croix_blanc.png"
+                    }
+                }
+                document.getElementById("plateau").appendChild(img_pion) // Ajout d'image du pion dans la div "plateau"
+                /* Clic du Pion*/
+                if (Grille[i][j] != null){ // Différent d'une case Null
+                    switch(Grille[i][j][1]){ 
+                        case "t":
+                            img_pion.onclick = function(){Tour(this)}
+                            break;
+                        case "c":
+                            img_pion.onclick = function(){Cava(this)}
+                            break;
+                        case "f":
+                            img_pion.onclick = function(){Fou(this)}
+                            break;
+                        case "d":
+                            img_pion.onclick = function(){Dame(this)}
+                            break;
+                        case "r":
+                            img_pion.onclick = function(){Roi(this)}
+                            break;
+                        case 'p':
+                            img_pion.onclick = function(){Pion(this)}
+                            break;
+                    }
+                }
+                /* */
+                img_pion.style.margin = "-3px" // Sans bordure
+                img_pion.style.zIndex = "1" // Niveau de l'image
+                img_pion.style.position = "absolute" // Sans contrainte
+                img_pion.style.left = String(rect.left + j * 100) + "px" // Position à gauche
+                img_pion.style.top = String(rect.top + i * 100) + "px" // Position en haut
+                
+                img.pion = img_pion
+            }
+            else{
+                img.pion = null
+            }
+        }
+    }
+}
+
+// Definition de la fonction "a"
+function Pion(pion){
+    reinitialiser()
+    pion_selection = pion
+    // Switch pour lancer differentes actions en fonction du pion qui est cliqué
+    switch(pion.id){
+        case "bp":
+            document.getElementById(String(Number(pion.case[0]) - 1) + pion.case[1]).src = "Image/case_rose.png"
+            document.getElementById(String(Number(pion.case[0]) - 2) + pion.case[1]).src = "Image/case_rose.png"
+            document.getElementById(String(Number(pion.case[0]) - 1) + pion.case[1]).couleur = "rose"
+            document.getElementById(String(Number(pion.case[0]) - 2) + pion.case[1]).couleur = "rose"
+            break;
+        case "np":
+            document.getElementById(String(Number(pion.case) + 10)).src = "Image/case_rose.png"
+            document.getElementById(String(Number(pion.case) + 20)).src = "Image/case_rose.png"
+            document.getElementById(String(Number(pion.case) + 10)).couleur = "rose"
+            document.getElementById(String(Number(pion.case) + 20)).couleur = "rose"
+            break;
+    }
+}
+
+function Cava(pion){
+    reinitialiser()
+    pion_selection = pion
+    if(Number(pion.case[0]) - 2 >= 0){
+        if(Number(pion.case[1]) - 1 >= 0){
+            Cava2(pion, -2, -1) // i j
+        }
+        if(Number(pion.case[1]) + 1 <= 7){
+            Cava2(pion, -2, 1) // i j
+        }   
+    }
+    if(Number(pion.case[0]) + 2 <= 7){
+        if(Number(pion.case[1]) - 1 >= 0){
+            Cava2(pion, 2, -1) // i j
+        }
+        if(Number(pion.case[1]) + 1 <= 7){
+            Cava2(pion, 2, 1) // i j
+        }   
+    }
+    if(Number(pion.case[1]) - 2 >= 0){
+        if(Number(pion.case[0]) - 1 >=0){
+            Cava2(pion, -1, -2) // i j
+        }
+        if(Number(pion.case[0]) + 1 <= 7){
+            Cava2(pion, -1, -2) // i j
+        }   
+    }
+    if(Number(pion.case[1]) + 2 <= 7){
+        if(Number(pion.case[0]) - 1 >= 0){
+            Cava2(pion, -1, 2) // i j
+        }
+        if(Number(pion.case[0]) + 1 <= 7){
+            Cava2(pion, 1, 2) // i j
+        }   
+    }
+}
+
+function Cava2(pion, o, m){
+    let lieu = document.getElementById(String(Number(pion.case[0]) + o) + String(Number(pion.case[1]) + m))
+    if(lieu.pion != null){
+        if(lieu.pion.id[0] != pion.id[0]){
+            document.getElementById(String(Number(pion.case[0]) + o) + String(Number(pion.case[1]) + m)).src = "Image/case_rose.png";
+            document.getElementById(String(Number(pion.case[0]) + o) + String(Number(pion.case[1]) + m)).couleur = "rose";
+        }
+    }
+    else{
+        document.getElementById(String(Number(pion.case[0]) + o) + String(Number(pion.case[1]) + m)).src = "Image/case_rose.png";
+        document.getElementById(String(Number(pion.case[0]) + o) + String(Number(pion.case[1]) + m)).couleur = "rose";
+    }
+}
+
+function Tour(pion){
+    reinitialiser()
+    pion_selection = pion
+    let i = 1
+    // haut
+    while(Number(pion.case) - i * 10 > -1 && document.getElementById(String(Number(pion.case[0]) - i) + pion.case[1]).pion == null){
+        document.getElementById(String(Number(pion.case[0]) - i) + pion.case[1]).src = "Image/case_rose.png"
+        document.getElementById(String(Number(pion.case[0]) - i) + pion.case[1]).couleur = "rose"
+        i += 1
+    }
+    i = 1
+    // bas
+    while(Number(pion.case) + i * 10 < 78 && document.getElementById(String(Number(pion.case[0]) + i) + pion.case[1]).pion == null){
+        document.getElementById(String(Number(pion.case[0]) + i) + pion.case[1]).src = "Image/case_rose.png"
+        document.getElementById(String(Number(pion.case[0]) + i) + pion.case[1]).couleur = "rose"
+        i += 1
+    }
+    i = 1
+    // gauche
+    while(Number(pion.case[1]) - i > -1 && document.getElementById(pion.case[0] + String(Number(pion.case[1]) - i)).pion == null){
+        document.getElementById(pion.case[0] + String(Number(pion.case[1]) - i)).src = "Image/case_rose.png"
+        document.getElementById(pion.case[0] + String(Number(pion.case[1]) - i)).couleur = "rose"
+        i += 1
+    }
+    i = 1
+    // droite
+    while(Number(pion.case[1]) + i < 8 && document.getElementById(pion.case[0] + String(Number(pion.case[1]) + i)).pion == null){
+        document.getElementById(pion.case[0] + String(Number(pion.case[1]) + i)).src = "Image/case_rose.png"
+        document.getElementById(pion.case[0] + String(Number(pion.case[1]) + i)).couleur = "rose"
+        i += 1
+    }
+}
+
+function Fou(pion){
+    reinitialiser()
+    pion_selection = pion
+    let i = 1
+// haut gauche
+    while(Number(pion.case[0]) - i > - 1 && Number(pion.case[1]) - i > - 1 
+    && document.getElementById(String(Number(pion.case[0]) - i + String(Number(pion.case[1]) - i))).pion == null){
+        document.getElementById(String(Number(pion.case[0]) - i + String(Number(pion.case[1]) - i))).src = "Image/case_rose.png"
+        document.getElementById(String(Number(pion.case[0]) - i + String(Number(pion.case[1]) - i))).couleur = "rose"
+        i += 1
+    }
+    i = 1
+// haut droit
+    while(Number(pion.case[0]) - i > - 1 && Number(pion.case[1]) + i < 8
+    && document.getElementById(String(Number(pion.case[0]) - i + String(Number(pion.case[1]) + i))).pion == null){
+        document.getElementById(String(Number(pion.case[0]) - i + String(Number(pion.case[1]) + i))).src = "Image/case_rose.png"
+        document.getElementById(String(Number(pion.case[0]) - i + String(Number(pion.case[1]) + i))).couleur = "rose"
+        i += 1
+    }
+    i = 1
+// bas gauche
+    while(Number(pion.case[0]) + i < 8 && Number(pion.case[1]) - i > - 1 
+    && document.getElementById(String(Number(pion.case[0]) + i + String(Number(pion.case[1]) - i))).pion == null){
+        document.getElementById(String(Number(pion.case[0]) + i + String(Number(pion.case[1]) - i))).src = "Image/case_rose.png"
+        document.getElementById(String(Number(pion.case[0]) + i + String(Number(pion.case[1]) - i))).couleur = "rose"
+        i += 1
+    }
+    i = 1
+// bas droit
+    while(Number(pion.case[0]) + i < 8 && Number(pion.case[1]) + i < 8
+    && document.getElementById(String(Number(pion.case[0]) + i + String(Number(pion.case[1]) + i))).pion == null){
+        document.getElementById(String(Number(pion.case[0]) + i + String(Number(pion.case[1]) + i))).src = "Image/case_rose.png"
+        document.getElementById(String(Number(pion.case[0]) + i + String(Number(pion.case[1]) + i))).couleur = "rose"
+        i += 1
+    }
+}
+
+function deplacement(frame){
+    if(frame.couleur == "rose"){
+        pion_selection.style.top = String(rect.top + Number(frame.id[0]) * 100) + "px"
+        pion_selection.style.left = String(rect.left + Number(frame.id[1]) * 100) + "px"
+        document.getElementById(pion_selection.case).pion = null
+        frame.pion = pion_selection
+        pion_selection.case = frame.id
+    }
+    reinitialiser()
+}
+
+function reinitialiser(){
+    // Parcours des cases de l'echiquier pour les reinitialiser a chaque lencement de la fonction
+    for(let i = 0; i < 8; i++){
+        for(let j = 0; j < 8; j++){
+            // Si la source de l'image est "case_rose", elle est remplacée par "case_noir" ou "case_blanc"
+            if(document.getElementById(String(i) + String(j)).couleur == "rose"){
+                if((i+j) % 2 == 0){
+                    document.getElementById(String(i) + String(j)).src = "Image/case_noir.png"
+                    document.getElementById(String(i) + String(j)).couleur = "noir"
+                }
+                else{
+                    document.getElementById(String(i) + String(j)).src = "Image/case_blanc.png"
+                    document.getElementById(String(i) + String(j)).couleur = "blanc"
+                }
+            }
+        }
+    }
+}
+
+function Apparition(){
+    document.getElementById("container").style.visibility = "visible"
+    document.getElementById("exit").style.visibility = "visible"
+    document.getElementById("biblio").style.visibility = "hidden"
+    document.getElementById("plateau").style.visibility = "hidden"
+    document.getElementById("reset").style.visibility = "hidden"
+}
+
+function Disparition(){
+    document.getElementById("container").style.visibility = "hidden" /* Biblioteque */
+    document.getElementById("exit").style.visibility = "hidden" /* Bouton pour retourner sur les échecs */
+    document.getElementById("biblio").style.visibility = "visible" /* Petite Bibliotèque */
+    document.getElementById("plateau").style.visibility = "visible" /* Jeu Echec */
+    document.getElementById("reset").style.visibility = "hidden"
+}
+
+Initialisation()
+
+
+Le terme échec et mat vient de šāh māta (en persan, soit aš-šāh māta الشّاهُ ماتَ en arabe), « le roi est mort », pour indiquer la défaite du roi. Le mot šāh (« roi » en persan) est à l'origine du mot échec et du nom des échecs dans un grand nombre de langues.
+
+
+<div class="Text" id="p1">
+				<div class="Titre">Les Echecs :</div>
+				<p>Le Sommaire</p>
+				<p>Les Règles La Reine Le Roi Le fou Le Cavalier La Tour Le Pion ROC Pris en Passant</p>
+			</div>
+			<div class="Text" id="p2">
+				
+			</div>
+			<div class="Text" id="p3">
+				<h1>Les Règles</h1>
+				<h2>-Présentation :</h2>
+				<p>
+					Une partie d'échecs commence dans la position initiale ci contre:
+					<br><br>
+					<img id="Partie" src="Image/partie.png" onclick="agrandi()">
+					<br><br>
+					Les blancs jouent le premier coup puis les joueurs jouent à tour de rôle en déplaçant à chaque fois une de leurs pièces (deux dans le cas d'un roque). Chaque pièce se déplace de façon spécifique, il n'est pas possible de jouer sur une case occupée par une pièce de son propre camp. Lorsqu'une pièce adverse se trouve sur la case d'arrivée de la pièce jouée, elle est capturée et retirée de l'échiquier. Gagner du matériel (des pièces) est un moyen pour gagner la partie, mais ne suffit pas toujours pour y parvenir.				
+					Il existe des règles spéciales liées au déplacement de certaines pièces : le roque, qui permet le déplacement simultané du roi et de la tour la plus proche du roi ; la prise en passant, qui permet une capture particulière des pions ; et la promotion des pions, qui permet de les transformer en une pièce maîtresse de son choix (sauf le roi) lorsqu'ils atteignent la dernière rangée de l'échiquier.
+					Lorsqu'un roi est menacé de capture, on dit qu'il est en échec. Si cette menace est imparable (on peut tenter de parer la menace en déplaçant le roi, en interposant une pièce ou en capturant la pièce attaquante) on dit qu'il y a échec et mat et la partie se termine sur la victoire du joueur qui mate. Il est interdit de mettre son propre
+				</p>
+			</div>
+			
+			<div class="Text" id="p4">
+				roi en échec ou de le faire passer sur une ligne d'échec pendant le roque. Il est également interdit de roquer quand le roi est en échec sur sa case de départ. Si cela arrive (par inadvertance entre débutants) on doit reprendre le coup.
+				Si un camp ne peut plus jouer aucun coup légal (cela arrive par exemple avec un roi seul et l'ensemble de ses pions bloqués) et si son roi n'est pas en échec, on dit alors qu'il s'agit d'une position de pat. Quel que soit le matériel dont le camp adverse dispose, la partie est déclarée nulle, c'est-à-dire sans vainqueur.
+				Le but du jeu est donc d'infliger un échec et mat à son adversaire.
+			</div>
+
+
+
+            <p id="point" style:position: absolute;
+    margin-top: 6px;
+    margin-left: 310px;
+    background: #F6F6F6;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;"></p>
+				<p id="sous_titre font-size: 0.7em;
+    margin-left: 320px;">Jouer au Jeu d'Echecs est déja un privilège alors de jouer sur celui de <a onclick="a_page(11)">...</a></p>
+				<p id="point position: absolute;
+    margin-top: 6px;
+    margin-left: 310px;
+    background: #F6F6F6;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;"></p>
+				<p id="sous_titre font-size: 0.7em;
+    margin-left: 320px;">Jouer au Jeu d'Echecs est déja un privilège alors de jouer sur celui de <a onclick="a_page(11)">...</a></p>

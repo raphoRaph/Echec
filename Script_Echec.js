@@ -40,6 +40,7 @@ Img_droite.addEventListener('mouseout', function(){
     Img_droite.style.transform = "rotate(180deg)"
 });
 
+
 for (let k = 1; k < 14; k++) {
     document.getElementById("r"+ String(k)).style.filter = "hue-rotate(" + String((k - 1)*(360/13)) +"deg)";
     document.getElementById("r"+ String(k)).style.marginLeft = String(k*(1200/13) + 50) + "px";

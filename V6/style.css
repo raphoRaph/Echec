@@ -1,0 +1,55 @@
+
+body {                             
+	background-image: url(Image/Autres/prism.png);
+}
+
+.plateau{
+	position: absolute;
+}
+
+.pions_morts{
+	background-color:rgba(169, 169, 169, 0.3);
+	position: absolute;
+}
+
+#canvas{
+	background-color: rgba(224,224,224, 0.85);
+	position: absolute;
+	z-index: -1;
+	text-align: center;
+	align-items: center;
+}
+
+#image{
+	position: absolute;
+	z-index: -1;
+}
+
+#text{
+	position: absolute;
+	background-image: linear-gradient(to bottom right, violet, indigo, blue, green, yellow, orange, red);
+	z-index: -1;
+	text-align: center;
+}
+
+#pions_changement{
+	position: absolute;
+	z-index: -1;
+}
+
+.pions_changement{
+	margin-right: -4px;
+	margin-bottom: -5px;
+	background-color: gray;
+	position: relative;
+}
+
+#QI_blanc{
+	color: white;
+	position: absolute;
+}
+
+#QI_noir{
+	color: rgb(37, 150, 190);
+	position: absolute;
+}

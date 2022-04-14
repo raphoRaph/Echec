@@ -6,15 +6,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
     	<link rel="icon" href="Image/Prof.jpg" type="image/jpg">
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="Autre/style.css">
 		<link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/minecraftia" type="text/css"/>
 	</head>
-	<body>
-		<img id="open" src="Image/Prof.jpg" onclick="menu()">
+	<body onkeydown='getKeyAndMove(event)'>
+		<img id="open" src="Image/Cases/prof_jaquot.png" onclick="menu()">
 		<div id="Jeu">
 			<div class="plateau" id="plateau">
 				<canvas id="canvas"></canvas>
-				<img id="image" src="Image/buzzer.png">
+				<img id="image" src="Image/Autres/buzzer.png">
 				<h1 id="text"></h1>
 				<div id="pions_changement">
 					<img id="1" class="pions_changement">
@@ -31,29 +31,52 @@
 		</div>
 		<div id="Livre">
 			<img src="Image/livre.png" id="carnet">
-			<img src="Image/milieu.png" id="milieu">
-			<img src="Image/quit.png" id="quit" onclick="exit()">
+			<div id="milieu" style="width: 1450px;height: 118px;"></div>
+			<img src="Image/quit.png" id="quit" onclick="quit()">
 			<img src="Image/fleche.png" id="fleche_gauche" onclick="tourne_gauche()">
 			<img src="Image/fleche.png" id="fleche_droite" onclick="tourne_droit()">
-			<img src="Image/point.png" class="Echec" id="r1" onclick="a_page(1)">
-			<img src="Image/point.png" class="Regle" id="r2" onclick="a_page(2)">
-			<img src="Image/point.png" class="Dame" id="r3" onclick="a_page(3)">
-			<img src="Image/Blanc/bd.png" class="Dame" id="g3">
-			<img src="Image/point.png" class="Roi" id="r4" onclick="a_page(4)">
-			<img src="Image/Blanc/br.png" class="Roi" id="g4">
-			<img src="Image/point.png" class="Tour" id="r5" onclick="a_page(5)">
-			<img src="Image/Blanc/bt.png" class="Tour" id="g5">
-			<img src="Image/point.png" class="Cavalier" id="r6" onclick="a_page(6)">
-			<img src="Image/Blanc/bc.png" class="Cavalier" id="g6">
-			<img src="Image/point.png" class="Fou" id="r7" onclick="a_page(7)">
-			<img src="Image/Blanc/bf.png" class="Fou" id="g7">
-			<img src="Image/point.png" class="Pion" id="r8" onclick="a_page(8)">
-			<img src="Image/Blanc/bp.png" class="Pion" id="g8">
-			<img src="Image/point.png" class="Roc" id="r9" onclick="a_page(9)">
-			<img src="Image/point.png" class="Pris" id="r10" onclick="a_page(10)">
-			<img src="Image/point.png" class="Credits" id="r11" onclick="a_page(11)">
-			<img src="Image/point.png" class="Autre" id="r12" onclick="a_page(12)">
-			<img src="Image/point.png" class="ah" id="r13" onclick="a_page(13)">
+			<svg width="69px" height="99px" viewBox="0 0 69 100" style="fill:#BA493D; position: absolute" class="Echec" id="r1" onclick="a_page(1)">
+				<path id="pa1" d="M35,61 l-34,0 0,-52 q0,-9 7,-9 l52,0 q10,0 10,11 l0,50 -35,0z"/>
+			</svg>
+			<svg width="69px" height="99px" viewBox="0 0 69 100" style="fill:#AD6AD4; position: absolute" class="Regle" id="r2" onclick="a_page(2)">
+				<path id="pa2" d="M35,61 l-34,0 0,-52 q0,-9 7,-9 l52,0 q10,0 10,11 l0,50 -35,0z"/>
+			</svg>
+			<svg width="69px" height="99px" viewBox="0 0 69 100" style="fill:#5E70F6; position: absolute" class="Dame" id="r3" onclick="a_page(3)">
+				<path id="pa3" d="M35,61 l-34,0 0,-52 q0,-9 7,-9 l52,0 q10,0 10,11 l0,50 -35,0z"/>
+			</svg>
+			<svg width="69px" height="99px" viewBox="0 0 69 100" style="fill:#D8B600; position: absolute" class="Roi" id="r4" onclick="a_page(4)">
+				<path id="pa4" d="M35,61 l-34,0 0,-52 q0,-9 7,-9 l52,0 q10,0 10,11 l0,50 -35,0z"/>
+			</svg>
+			<svg width="69px" height="99px" viewBox="0 0 69 100" style="fill:#CA36C4; position: absolute" class="Tour" id="r5" onclick="a_page(5)">
+				<path id="pa5" d="M35,61 l-34,0 0,-52 q0,-9 7,-9 l52,0 q10,0 10,11 l0,50 -35,0z"/>
+			</svg>
+			<svg width="69px" height="99px" viewBox="0 0 69 100" style="fill:#8BB700"; position: absolute" class="Cavalier" id="r6" onclick="a_page(6)">
+				<path id="pa6" d="M35,61 l-34,0 0,-52 q0,-9 7,-9 l52,0 q10,0 10,11 l0,50 -35,0z"/>
+			</svg>
+			<svg width="69px" height="99px" viewBox="0 0 69 100" style="fill:#EB8B2D; position: absolute" class="Fou" id="r7" onclick="a_page(7)">
+				<path id="pa7" d="M35,61 l-34,0 0,-52 q0,-9 7,-9 l52,0 q10,0 10,11 l0,50 -35,0z"/>
+			</svg>
+			<svg width="69px" height="99px" viewBox="0 0 69 100" style="fill:#4AC6CB; position: absolute" class="Pion" id="r8" onclick="a_page(8)">
+				<path id="pa8" d="M35,61 l-34,0 0,-52 q0,-9 7,-9 l52,0 q10,0 10,11 l0,50 -35,0z"/>
+			</svg>
+			<svg width="69px" height="99px" viewBox="0 0 69 100" style="fill:#D6226E; position: absolute" class="Roc" id="r9" onclick="a_page(9)">
+				<path id="pa9" d="M35,61 l-34,0 0,-52 q0,-9 7,-9 l52,0 q10,0 10,11 l0,50 -35,0z"/>
+			</svg>
+			<svg width="69px" height="99px" viewBox="0 0 69 100" style="fill:#662D91; position: absolute" class="Pris" id="r10" onclick="a_page(10)">
+				<path id="pa10" d="M35,61 l-34,0 0,-52 q0,-9 7,-9 l52,0 q10,0 10,11 l0,50 -35,0z"/>
+			</svg>
+			<svg width="69px" height="99px" viewBox="0 0 69 100" style="fill:#2D7091; position: absolute" class="Credits" id="r11" onclick="a_page(11)">
+				<path id="pa11" d="M35,61 l-34,0 0,-52 q0,-9 7,-9 l52,0 q10,0 10,11 l0,50 -35,0z"/>
+			</svg>
+			<svg width="69px" height="99px" viewBox="0 0 69 100" style="fill:#403E3E; position: absolute" class="Autre" id="r12" onclick="a_page(12)">
+				<path id="pa12" d="M35,61 l-34,0 0,-52 q0,-9 7,-9 l52,0 q10,0 10,11 l0,50 -35,0z"/>
+			</svg>
+			<svg width="69px" height="99px" viewBox="0 0 69 100" style="fill:#403E3E; position: absolute" class="Parametres" id="r13" onclick="a_page(13)">
+				<path id="pa13" d="M35,61 l-34,0 0,-52 q0,-9 7,-9 l52,0 q10,0 10,11 l0,50 -35,0z"/>
+			</svg>
+			
+			
+			<div class = "Parametres" id="g13" style="width: 100px; height: 100px; position: absolute; margin-top: 10px; margin-left: 1261px; background-color: #101010; clip-path: path('M43.454,18.443h-2.437c-0.453-1.766-1.16-3.42-2.082-4.933l1.752-1.756c0.473-0.473,0.733-1.104,0.733-1.774 c0-0.669-0.262-1.301-0.733-1.773l-2.92-2.917c-0.947-0.948-2.602-0.947-3.545-0.001l-1.826,1.815 C30.9,6.232,29.296,5.56,27.529,5.128V2.52c0-1.383-1.105-2.52-2.488-2.52h-4.128c-1.383,0-2.471,1.137-2.471,2.52v2.607 c-1.766,0.431-3.38,1.104-4.878,1.977l-1.825-1.815c-0.946-0.948-2.602-0.947-3.551-0.001L5.27,8.205 C4.802,8.672,4.535,9.318,4.535,9.978c0,0.669,0.259,1.299,0.733,1.772l1.752,1.76c-0.921,1.513-1.629,3.167-2.081,4.933H2.501 C1.117,18.443,0,19.555,0,20.935v4.125c0,1.384,1.117,2.471,2.501,2.471h2.438c0.452,1.766,1.159,3.43,2.079,4.943l-1.752,1.763 c-0.474,0.473-0.734,1.106-0.734,1.776s0.261,1.303,0.734,1.776l2.92,2.919c0.474,0.473,1.103,0.733,1.772,0.733 s1.299-0.261,1.773-0.733l1.833-1.816c1.498,0.873,3.112,1.545,4.878,1.978v2.604c0,1.383,1.088,2.498,2.471,2.498h4.128 c1.383,0,2.488-1.115,2.488-2.498v-2.605c1.767-0.432,3.371-1.104,4.869-1.977l1.817,1.812c0.474,0.475,1.104,0.735,1.775,0.735 c0.67,0,1.301-0.261,1.774-0.733l2.92-2.917c0.473-0.472,0.732-1.103,0.734-1.772c0-0.67-0.262-1.299-0.734-1.773l-1.75-1.77 c0.92-1.514,1.627-3.179,2.08-4.943h2.438c1.383,0,2.52-1.087,2.52-2.471v-4.125C45.973,19.555,44.837,18.443,43.454,18.443z M22.976,30.85c-4.378,0-7.928-3.517-7.928-7.852c0-4.338,3.55-7.85,7.928-7.85c4.379,0,7.931,3.512,7.931,7.85 C30.906,27.334,27.355,30.85,22.976,30.85z');"></div>
 			<div class="Page" id="p1">
 				<div class="Haut">
 					<p id="Titre">Les Echecs</p>
@@ -109,7 +132,7 @@
 					</p>
 					<p id="point" style="margin: 212px 945px;"></p>
 					<p id="Sous_Som" style="margin: 202px 955px;">
-						<a onclick="a_page(13)">Easter Egg</a>
+						<a onclick="a_page(13)">Paramètres</a>
 					</p>
 				</div>
 
@@ -269,9 +292,13 @@
 					<p id="Titre">Le Roc</p>
 				</div>
 				<div class="Milieu">
-					ESTEBAN UN GIF
+					
 				</div>
-				<div class="Bas"></div>
+				<div class="Bas">
+					<img id="gif" src="Image/GRAND_ROQUE.gif" style="margin: 3px 300px;">
+					<div class="ligne" style="margin: 155px 550px;"></div>
+					<img id="gif" src="Image/ROQUE.gif" style="margin: 3px 900px;">
+				</div>
 			</div>
 			<div class="Page" id="p10">
 				<div class="Haut">
@@ -280,7 +307,9 @@
 				<div class="Milieu">
 					ESTEBAN UN GIF
 				</div>
-				<div class="Bas"></div>
+				<div class="Bas">
+					<img id="gif" src="Image/PRISE_EN_PASSANT.gif" style="margin: 3px 300px;">
+				</div>
 			</div>
 			<div class="Page" id="p11">
 				<div class="Haut">
@@ -305,10 +334,29 @@
 			</div>
 			<div class="Page" id="p13">
 				<div class="Haut">
-					<p id="Titre">Easter Egg</p>
+					<p id="Titre">Paramètres</p>
+					
 				</div>
 				<div class="Milieu">
-
+					<p id="Switch" style="margin: 15px 20px;"> Son de Fond :</p>
+					<label class="toggle1" for="myToggle1" >
+						<input class="toggle1__input" name="" type="checkbox" id="myToggle1" onclick="mute_toogle1()">
+						<div class="toggle1__fill"></div>
+					</label>
+					<p id="Volume" style="margin: 50px 20px; position: absolute;"> Volume de Fond :</p>
+					<div class="slidecontainer">
+						<input type="range" min="0" max="100" value="50" class="slider" id="myRange1">
+					</div>
+					<div class="ligne" style="margin: 15px 550px;"></div>
+					<p id="Switch" style="margin: 50px 700px;"> Son de Mouvement :</p>
+					<label class="toggle2" for="myToggle2">
+						<input class="toggle2__input" name="" type="checkbox" id="myToggle2" onclick="mute_toogle2()">
+						<div class="toggle2__fill"></div>
+					</label>
+					<p id="Volume" style="margin: 0px 700px;"> Volume de Mouvement :</p>
+					<div class="slidecontainer">
+						<input type="range" min="0" max="100" value="50" class="slider" id="myRange2">
+					</div>
 				</div>
 				<div class="Bas">
 
@@ -318,7 +366,7 @@
 
 		<div class="plateau" id="plateau"></div>
 		<div class="son" id="son"></div>
-      	<script src="script.js"></script>
+      	<script src="Autre/script.js"></script>
+		  <script src="Autre/Script_Carnet.js"></script>
 	</body>
 </html>
-

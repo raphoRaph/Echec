@@ -1,0 +1,432 @@
+
+body {                             
+	background-image: url(/Image/Autres/prism.png);
+    font-family: Minecraftia;
+    color: #F6F6F6;
+
+}
+/* Jeu d'Echec */
+.plateau{
+	position: absolute;
+}
+
+#Jeu{
+    visibility: visible;
+    position: absolute;
+}
+.pions_morts{
+	background-color:rgba(169, 169, 169, 0.3);
+	position: absolute;
+}
+
+#canvas{
+	background-color: rgba(224,224,224, 0.85);
+	position: absolute;
+	z-index: -1;
+	text-align: center;
+	align-items: center;
+}
+
+#image{
+	position: absolute;
+	z-index: -1;
+}
+
+#text{
+	position: absolute;
+    color: black;
+    
+	background-image: linear-gradient(to bottom right, violet, indigo, blue, green, yellow, orange, red);
+    background-image: linear-gradient(to bottom right, #02A3D0, #FFB404, #F12100, #00475B);
+	z-index: -1;
+	text-align: center;
+}
+
+#pions_changement{
+	position: absolute;
+	z-index: -1;
+}
+
+.pions_changement{
+	margin-right: -4px;
+	margin-bottom: -5px;
+	background-color: gray;
+	position: relative;
+}
+
+#QI_blanc{
+	color: white;
+	position: absolute;
+}
+
+#QI_noir{
+	color: rgb(37, 150, 190);
+	position: absolute;
+}
+
+/* Fin Jeu d'Echec */
+
+#Livre{
+    visibility: hidden;
+}
+
+#open{
+    position: absolute;
+    visibility: visible;
+    margin-top: 150px;
+}
+h2{
+    padding-left: 20px;
+}
+
+img{
+    pointer-events: all;
+}
+
+a{
+    pointer-events: all;
+}
+
+.Haut{
+    position: absolute;
+    width: 1450px;
+    height: 223px;
+}
+/* Class */
+.Milieu{
+    position: absolute;
+    margin-top: 220px;
+    width: 1450px;
+    height: 289px;
+}
+
+#Som{
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 500px;
+}
+#Sous_Som{
+    position: absolute;
+    width: 200px;
+}
+
+
+.Page{
+    margin-top: 60px;
+    margin-left: 100px;
+    width: 1450px;
+    height: 820px;
+    position: absolute;
+    pointer-events: none;
+}
+
+.ligne{
+    width: 200px;
+    height: 0px;
+    border: 4px solid #F6F6F6;
+    border-radius: 4px;
+    transform: rotate(90deg);
+    position: absolute;
+}
+
+.Pied{
+    color: red;
+    padding-left: 250px;
+}
+/* */
+/* ID */
+#gauche, #droite{
+    height: 900px;
+    position: absolute;
+}
+
+#Titre{
+    position: absolute;
+    margin-top: 0px;
+    margin-left: 300px;
+    font-size: 6em;
+    font-family: Minecraftia;
+}
+
+#point{
+    position: absolute;
+    margin-top: 136px;
+    margin-left: 310px;
+    background: #F6F6F6;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+
+#sous_titre{
+    font-size: 0.7em;
+    margin-top: 130px;
+    margin-left: 320px;
+}
+
+
+#Partie{
+    width: 300px;
+    padding-left: 100px;
+    pointer-events: none;
+}
+
+#carnet{
+    position: absolute;
+    padding-left: 0px;
+    margin-top: 30px;
+}
+
+#quit{
+    position: absolute;
+    z-index: 6;
+    margin-left: 1450px;
+}
+
+#fleche_gauche{
+    position: absolute;
+    margin-top: 820px;
+    margin-left: 1400px;
+}
+
+#fleche_droite{
+    position: absolute;
+    margin-top: 820px;
+    margin-left: 1500px;
+    transform: rotate(180deg);
+}
+
+
+
+.Bas{
+    position: absolute;
+    margin-top: 510px;
+    width: 1450px;
+    height: 310px;
+}
+#move{
+    position: absolute;
+    width: 250px;
+}
+
+#gif{
+    position: absolute;
+    height: 304px;
+}
+
+#savoir{
+    margin-left: 10px;
+}
+
+#click{
+    color: aqua;
+}
+.Echec{
+    position: absolute;
+    margin-left: 142.30769230769232px;
+
+}
+.Regle{
+    position: absolute;
+    margin-left: 234.6153846153846px;
+}
+.Dame{
+    position: absolute;
+    margin-left: 326.9230769230769px;
+
+}
+.Roi{
+    position: absolute;
+    margin-left: 419.2307692307692px;
+
+}
+.Tour{
+    position: absolute;
+    margin-left: 511.53846153846155px;
+
+}
+.Cavalier{
+    position: absolute;
+    margin-left: 603.8461538461538px;
+
+}
+.Fou{
+    position: absolute;
+    margin-left: 696.1538461538462px;
+
+}
+.Pion{
+    position: absolute;
+    margin-left: 788.4615384615385px;
+
+}
+.Roc{
+    position: absolute;
+    margin-left: 880.7692307692307px;
+
+}
+.Pris{
+    position: absolute;
+    margin-left: 973.0769230769231px;
+
+}
+.Credits{
+    position: absolute;
+    margin-left: 1065.3846153846152px;
+
+}
+.Autre{
+    position: absolute;
+    margin-left: 1157.6923076923076px;
+
+
+}
+.Parametres{
+    position: absolute;
+    margin-left: 1250px;
+
+
+}
+
+#milieu{
+    position: absolute;
+    margin-top: 165px;
+    margin-left: 100px;
+
+}
+
+#g1, #g2, #g3, #g4, #g5, #g6, #g7, #g8, #g9, #g10, #g11, #g12, #g13{
+    width: 67px;
+    height: 67px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+
+.slider {
+    -webkit-appearance: none;
+    width: 40%;
+    height: 15px;
+    border-radius: 5px;  
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    z-index: 100;
+    pointer-events: all;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%; 
+    background: #04AA6D;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #04AA6D;
+    cursor: pointer;
+}
+
+
+
+
+
+
+.toggle1 {
+    --width: 40px;
+    --height: calc(var(--width) / 2);
+    --border-radius: calc(var(--height) / 2);
+
+    display: inline-block;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+.toggle1__input {
+    display: none;
+}
+
+.toggle1__fill {
+    position: relative;
+    width: var(--width);
+    height: var(--height);
+    border-radius: var(--border-radius);
+    background: #009578;
+    transition: background 0.2s;
+}
+
+.toggle1__fill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: var(--height);
+    width: var(--height);
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    border-radius: var(--border-radius);
+    transition: transform 0.2s;
+}
+
+
+.toggle1__input:checked ~ .toggle1__fill {
+    background: #dddddd;
+}
+
+.toggle1__input:checked ~ .toggle1__fill::after {
+    transform: translateX(var(--height));
+}
+
+
+.toggle2 {
+    --width: 40px;
+    --height: calc(var(--width) / 2);
+    --border-radius: calc(var(--height) / 2);
+
+    display: inline-block;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+.toggle2__input {
+    display: none;
+}
+
+.toggle2__fill {
+    position: relative;
+    width: var(--width);
+    height: var(--height);
+    border-radius: var(--border-radius);
+    background: #009578;
+    transition: background 0.2s;
+}
+
+.toggle2__fill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: var(--height);
+    width: var(--height);
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    border-radius: var(--border-radius);
+    transition: transform 0.2s;
+}
+
+
+.toggle2__input:checked ~ .toggle2__fill {
+    background: #dddddd;
+}
+
+.toggle2__input:checked ~ .toggle2__fill::after {
+    transform: translateX(var(--height));
+}
